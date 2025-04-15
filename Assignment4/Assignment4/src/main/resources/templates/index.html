@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Welcome to Our Clothing Warehouse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Gradient Background */
+        body {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2f7 100%); /* Light and airy blue tones */
+            min-height: 100vh;
+            font-family: sans-serif; /* More modern and readable font */
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 0; /* Slightly more padding for a grander feel */
+            text-align: center;
+            color: #444; /* Darker text for better contrast */
+        }
+
+        .hero-section h1 {
+            font-size: 4rem; /* Larger, more impactful title */
+            font-weight: 700;
+            margin-bottom: 25px;
+            animation: fadeInDown 1s ease-in-out;
+            color: #2c3e50; /* A sophisticated dark blue */
+        }
+
+        .hero-section p {
+            font-size: 1.3rem; /* Slightly larger paragraph text */
+            margin-bottom: 35px;
+            max-width: 700px; /* Wider paragraph for better readability on larger screens */
+            margin-left: auto;
+            margin-right: auto;
+            color: #555; /* Slightly lighter text for the paragraph */
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            padding: 14px 35px; /* Slightly larger buttons */
+            font-size: 1.2rem;
+            border-radius: 5px; /* More subtle rounded corners */
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 500; /* Semi-bold for better emphasis */
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-5px); /* More pronounced lift on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* More noticeable shadow */
+        }
+
+        .btn-primary {
+            background-color: #3498db; /* A brighter, more inviting blue */
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9; /* Darker shade on hover */
+        }
+
+        .btn-outline-secondary {
+            border-color: #7f8c8d; /* A softer grey */
+            color: #7f8c8d;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #7f8c8d;
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px); /* More pronounced initial movement */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px); /* More pronounced initial movement */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            border: 1px solid #eee; /* Subtle border */
+            border-radius: 10px; /* Softer rounded corners */
+            padding: 30px; /* More padding for a spacious feel */
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px); /* More noticeable lift on hover */
+        }
+
+        .feature-card i {
+            font-size: 3rem; /* Larger icons */
+            color: #3498db; /* Consistent blue color */
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+
+            .btn-custom {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .feature-card i {
+                font-size: 2rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<section class="hero-section">
+    <div class="container">
+        <h1>Discover Your Perfect Style</h1>
+        <p>
+            Explore our extensive collection of high-quality clothing. From everyday essentials to the latest trends,
+            find everything you need to express your unique style.
+        </p>
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn btn-primary btn-custom me-3">Sign In</a>
+            <a th:href="@{/register}" class="btn btn-outline-secondary btn-custom">Create Account</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/items}" class="btn btn-primary btn-custom">Browse Collection</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Wide Selection</h3>
+                    <p>Browse through a diverse range of clothing for all styles and occasions.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Fast Shipping</h3>
+                    <p>Enjoy reliable and speedy delivery right to your doorstep.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Easy Returns</h3>
+                    <p>Shop with confidence knowing our return process is simple and hassle-free.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

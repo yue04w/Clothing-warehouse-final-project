@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Item to Distribution Centre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Add Item to Distribution Centre</h1>
+    <a th:href="@{/admin/distribution-centres}" class="btn btn-secondary mb-3">
+        <i class="fas fa-arrow-left me-2"></i>Back to Distribution Centres
+    </a>
+
+    <form th:action="@{/admin/distribution-centres/add-item}" method="post" th:object="${distributionCentreItem}">
+        <input type="hidden" th:field="*{centreId}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Item Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{item.name}"
+                   th:classappend="${#fields.hasErrors('item.name')} ? 'is-invalid' : ''" required>
+            <div class="invalid-feedback" th:errors="*{item.name}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="brand" class="form-label">Brand</label>
+            <select class="form-select" id="brand" th:field="*{item.brand}"
+                    th:classappend="${#fields.hasErrors('item.brand')} ? 'is-invalid' : ''" required>
+                <option value="">Select a brand</option>
+                <option th:each="brand : ${T(com.example.clotheswarehouse.enums.Brand).values()}"
+                        th:value="${brand}" th:text="${brand}"></option>
+            </select>
+            <div class="invalid-feedback" th:errors="*{item.brand}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="yearOfCreation" class="form-label">Year of Creation</label>
+            <input type="number" class="form-control" id="yearOfCreation" th:field="*{item.yearOfCreation}"
+                   th:classappend="${#fields.hasErrors('item.yearOfCreation')} ? 'is-invalid' : ''" min="2022" required>
+            <div class="invalid-feedback" th:errors="*{item.yearOfCreation}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" step="0.01" class="form-control" id="price" th:field="*{item.price}"
+                   th:classappend="${#fields.hasErrors('item.price')} ? 'is-invalid' : ''" min="1000.01" required>
+            <div class="invalid-feedback" th:errors="*{item.price}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="quantity" th:field="*{quantity}"
+                   th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid' : ''" min="1" required>
+            <div class="invalid-feedback" th:errors="*{quantity}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>Add Item
+        </button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
